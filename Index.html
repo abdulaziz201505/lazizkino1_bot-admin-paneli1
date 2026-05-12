@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multfilm Bot - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            color: #764ba2;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .movie-form {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ff5252;
+        }
+
+        .movies-list {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.6s ease-out 0.4s both;
+        }
+
+        .movies-list h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .movie-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .movie-item:hover {
+            background: #f9f9f9;
+            padding-left: 10px;
+        }
+
+        .movie-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .movie-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .movie-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85em;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-edit {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #999;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .pagination button.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 Multfilm Bot - Admin Panel</h1>
+            <p>Telegram Bot Boshqaruvi - Multfilm va To'lov Tizimlari</p>
+        </header>
+
+        <!-- Stats -->
+        <div class="main-grid">
+            <div class="card">
+                <h2>👥 Jami Foydalanuvchilar</h2>
+                <div class="stat-number" id="totalUsers">0</div>
+                <div class="stat-label">Qayd etilgan a'zolar</div>
+            </div>
+
+            <div class="card">
+                <h2>💎 Premium A'zolar</h2>
+                <div class="stat-number" id="premiumUsers">0</div>
+                <div class="stat-label">Faol obunalar</div>
+            </div>
+
+            <div class="card">
+                <h2>🎥 Jami Kinolar</h2>
+                <div class="stat-number" id="totalMovies">0</div>
+                <div class="stat-label">Ro'yxatdagi kinolar</div>
+            </div>
+
+            <div class="card">
+                <h2>💰 Tushumlar</h2>
+                <div class="stat-number" id="revenue">0</div>
+                <div class="stat-label">So'mda to'lovlar</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('movies')">🎨 Multfilm Qo'shish</button>
+                <button class="tab-btn" onclick="switchTab('list')">📋 Multfilm-lar Ro'yxati</button>
+                <button class="tab-btn" onclick="switchTab('users')">👥 Foydalanuvchilar</button>
+                <button class="tab-btn" onclick="switchTab('settings')">⚙️ Sozlamalar</button>
+            </div>
+
+            <!-- Tab 1: Add Movie -->
+            <div id="movies" class="tab-content active">
+                <div class="movie-form">
+                    <h2>🎨 Yangi Multfilm Qo'shish</h2>
+                    <div id="addMessage"></div>
+
+                    <div class="form-group">
+                        <label>Multfilm Kodi (1-1000)</label>
+                        <input type="number" id="movieCode" min="1" max="1000" placeholder="Masalan: 001">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Multfilm Nomi (O'zbek)</label>
+                        <input type="text" id="movieNameUz" placeholder="Masalan: Yangi Multfilm">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Multfilm Nomi (Ingliz)</label>
+                        <input type="text" id="movieNameEn" placeholder="Cartoon Title">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tavsif</label>
+                        <textarea id="movieDesc" placeholder="Multfilm haqida qisqa ma'lumot..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Yili</label>
+                        <input type="number" id="movieYear" min="1900" max="2099" placeholder="2024">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Janr</label>
+                        <select id="movieGenre">
+                            <option value="">Tanlang...</option>
+                            <option value="drama">Drama</option>
+                            <option value="comedy">Komediya</option>
+                            <option value="action">Auksion</option>
+                            <option value="horror">Qo'rqinch</option>
+                            <option value="romance">Sevgi</option>
+                            <option value="adventure">Sarguzasht</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Video URL</label>
+                        <input type="text" id="movieUrl" placeholder="https://example.com/video.mp4">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rasmi URL</label>
+                        <input type="text" id="moviePoster" placeholder="https://example.com/poster.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kino Davomiyligi (minut)</label>
+                        <input type="number" id="movieDuration" min="1" placeholder="120">
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="addMovie()">✅ Multfilm Qo'shish</button>
+                        <button class="btn btn-secondary" onclick="clearForm()">🔄 Tozalash</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Movies List -->
+            <div id="list" class="tab-content">
+                <div class="search-box">
+                    <input type="text" id="searchMovie" placeholder="Multfilm kodini yoki nomini qidiryng...">
+                    <button onclick="searchMovies()">🔍 Qidirish</button>
+                </div>
+
+                <div id="loadingMovies" class="loading">
+                    <div class="spinner"></div>
+                    <p>Kinolar yuklanimoqda...</p>
+                </div>
+
+                <div id="moviesList" class="movies-list" style="display: none;">
+                    <h2>📋 Saqlangan Multfilm-lar</h2>
+                    <div id="moviesContainer"></div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Users -->
+            <div id="users" class="tab-content">
+                <div class="search-box">
+                    <input type="text" id="searchUser" placeholder="Foydalanuvchi nomini qidiryng...">
+                    <button onclick="searchUsers()">🔍 Qidirish</button>
+                </div>
+
+                <div id="loadingUsers" class="loading">
+                    <div class="spinner"></div>
+                    <p>Foydalanuvchilar yuklanimoqda...</p>
+                </div>
+
+                <div id="usersList" style="display: none;">
+                    <h2>👥 Foydalanuvchilar Ro'yxati</h2>
+                    <div id="usersContainer"></div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Settings -->
+            <div id="settings" class="tab-content">
+                <div class="movie-form">
+                    <h2>⚙️ Bot Sozlamalari</h2>
+                    <div id="settingsMessage"></div>
+
+                    <div class="form-group">
+                        <label>Bot Token</label>
+                        <input type="password" id="botToken" value="8707470724:AAGAI02VK56b077kBYYNPfjs6yyAEs5JEOI"
+                            readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Admin Username</label>
+                        <input type="text" id="adminName" value="@Laziz_2015_67">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Premium Narxi (so'm)</label>
+                        <input type="number" id="premiumPrice" value="30000">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bepul Paket - Haftalik Kino Soni</label>
+                        <input type="number" id="freeMoviesPerWeek" value="1" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Yo'riqnoma Matni</label>
+                        <textarea id="helpText">❓ YORDAM
+
+1️⃣ Kino kodini yuboring (1-1000)
+2️⃣ Bot sizga kino yuboradi
+3️⃣ Bepul paket - 1 hafta 1 kino
+4️⃣ Premium - cheksiz kino</textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="saveSettings()">💾 Saqlash</button>
+                        <button class="btn btn-secondary" onclick="exportData()">📥 Ma'lumotlarni Yuklab Olish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Local Storage da ma'lumotlarni saqlash
+        const STORAGE_KEY = 'laziz_kino_bot_data';
+
+        // Dastlabki ma'lumotlar
+        function initData() {
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    movies: {},
+                    users: {},
+                    settings: {
+                        botToken: '8707470724:AAGAI02VK56b077kBYYNPfjs6yyAEs5JEOI',
+                        adminName: '@Laziz_2015_67',
+                        premiumPrice: 30000,
+                        freeMoviesPerWeek: 1
+                    }
+                }));
+            }
+        }
+
+        function getData() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        }
+
+        function saveData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        // Tab almashtirish
+        function switchTab(tabName) {
+            // Barcha tab content ni yashirish
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Tanlangan tabni ko'rsatish
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'list') loadMoviesList();
+            if (tabName === 'users') loadUsersList();
+        }
+
+        // Kino qo'shish
+        function addMovie() {
+            const code = document.getElementById('movieCode').value;
+            const nameUz = document.getElementById('movieNameUz').value;
+            const nameEn = document.getElementById('movieNameEn').value;
+            const desc = document.getElementById('movieDesc').value;
+            const year = document.getElementById('movieYear').value;
+            const genre = document.getElementById('movieGenre').value;
+            const url = document.getElementById('movieUrl').value;
+            const poster = document.getElementById('moviePoster').value;
+            const duration = document.getElementById('movieDuration').value;
+
+            if (!code || !nameUz || !url) {
+                showMessage('addMessage', 'Barcha majburiy maydonlarni to\'ldiring!', 'error');
+                return;
+            }
+
+            const data = getData();
+            data.movies[code] = {
+                code,
+                nameUz,
+                nameEn,
+                desc,
+                year,
+                genre,
+                url,
+                poster,
+                duration,
+                createdAt: new Date().toISOString()
+            };
+
+            saveData(data);
+            showMessage('addMessage', `✅ Multfilm #${code} muvaffaqiyatli qo'shildi!`, 'success');
+            clearForm();
+            updateStats();
+        }
+
+        // Kino ro'yxatini yuklash
+        function loadMoviesList() {
+            const data = getData();
+            const container = document.getElementById('moviesContainer');
+            const list = document.getElementById('moviesList');
+            const loading = document.getElementById('loadingMovies');
+
+            loading.style.display = 'block';
+            list.style.display = 'none';
+
+            setTimeout(() => {
+                loading.style.display = 'none';
+                list.style.display = 'block';
+
+                if (Object.keys(data.movies).length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #999;">Hali kinolar qo\'shilmagan</p>';
+                    return;
+                }
+
+                container.innerHTML = Object.values(data.movies).map(movie => `
+                    <div class="movie-item">
+                        <div class="movie-info">
+                            <h3>#${movie.code} - ${movie.nameUz}</h3>
+                            <p>${movie.nameEn} | ${movie.year} | ${movie.genre}</p>
+                            <p>${movie.duration} min | ${movie.desc.substring(0, 50)}...</p>
+                        </div>
+                        <div class="movie-actions">
+                            <button class="btn-small btn-edit" onclick="editMovie('${movie.code}')">✏️ Tahrir</button>
+                            <button class="btn-small btn-delete" onclick="deleteMovie('${movie.code}')">🗑️ O'chirish</button>
+                        </div>
+                    </div>
+                `).join('');
+            }, 500);
+        }
+
+        // Multfilm o'chirish
+        function deleteMovie(code) {
+            if (confirm(`#${code} multfilm o'chirilsinmi?`)) {
+                const data = getData();
+                delete data.movies[code];
+                saveData(data);
+                showMessage('addMessage', `✅ Multfilm #${code} o'chirildi!`, 'success');
+                loadMoviesList();
+                updateStats();
+            }
+        }
+
+        // Foydalanuvchilar ro'yxati
+        function loadUsersList() {
+            const data = getData();
+            const container = document.getElementById('usersContainer');
+            const list = document.getElementById('usersList');
+            const loading = document.getElementById('loadingUsers');
+
+            loading.style.display = 'block';
+            list.style.display = 'none';
+
+            setTimeout(() => {
+                loading.style.display = 'none';
+                list.style.display = 'block';
+
+                if (Object.keys(data.users).length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #999;">Hali foydalanuvchilar yo\'q</p>';
+                    return;
+                }
+
+                container.innerHTML = Object.values(data.users).map(user => {
+                    const isPremium = user.plan === 'premium' && new Date(user.premiumExpires) > new Date();
+                    return `
+                        <div class="movie-item">
+                            <div class="movie-info">
+                                <h3>@${user.username}</h3>
+                                <p>Plan: ${isPremium ? '💎 Premium' : '🆓 Bepul'}</p>
+                                <p>Qo'shilgan: ${new Date(user.joinDate).toLocaleDateString('uz-UZ')}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }, 500);
+        }
+
+        // Statistikani yangilash
+        function updateStats() {
+            const data = getData();
+            document.getElementById('totalUsers').textContent = Object.keys(data.users).length;
+            document.getElementById('totalMovies').textContent = Object.keys(data.movies).length;
+
+            const premiumCount = Object.values(data.users).filter(u =>
+                u.plan === 'premium' && new Date(u.premiumExpires) > new Date()
+            ).length;
+            document.getElementById('premiumUsers').textContent = premiumCount;
+        }
+
+        // Xabar ko'rsatish
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                element.innerHTML = '';
+            }, 5000);
+        }
+
+        // Formani tozalash
+        function clearForm() {
+            document.getElementById('movieCode').value = '';
+            document.getElementById('movieNameUz').value = '';
+            document.getElementById('movieNameEn').value = '';
+            document.getElementById('movieDesc').value = '';
+            document.getElementById('movieYear').value = '';
+            document.getElementById('movieGenre').value = '';
+            document.getElementById('movieUrl').value = '';
+            document.getElementById('moviePoster').value = '';
+            document.getElementById('movieDuration').value = '';
+        }
+
+        // Qidirysh
+        function searchMovies() {
+            const query = document.getElementById('searchMovie').value.toLowerCase();
+            const data = getData();
+            const container = document.getElementById('moviesContainer');
+
+            const filtered = Object.values(data.movies).filter(m =>
+                m.code.includes(query) || m.nameUz.toLowerCase().includes(query) || m.nameEn.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999;">Multfilm topilmadi</p>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(movie => `
+                <div class="movie-item">
+                    <div class="movie-info">
+                        <h3>#${movie.code} - ${movie.nameUz}</h3>
+                        <p>${movie.nameEn} | ${movie.year} | ${movie.genre}</p>
+                    </div>
+                    <div class="movie-actions">
+                        <button class="btn-small btn-delete" onclick="deleteMovie('${movie.code}')">🗑️ O'chirish</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Ma'lumotlarni yuklab olish
+        function exportData() {
+            const data = getData();
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'laziz_kino_bot_data.json';
+            a.click();
+        }
+
+        // Sozlamalarni saqlash
+        function saveSettings() {
+            const data = getData();
+            data.settings.adminName = document.getElementById('adminName').value;
+            data.settings.premiumPrice = parseInt(document.getElementById('premiumPrice').value);
+            data.settings.freeMoviesPerWeek = parseInt(document.getElementById('freeMoviesPerWeek').value);
+
+            saveData(data);
+            showMessage('settingsMessage', '✅ Sozlamalar saqlandi!', 'success');
+        }
+
+        // Sahifani ochganda
+        window.addEventListener('load', () => {
+            initData();
+            updateStats();
+        });
+
+        // Avtomatik yangilash
+        setInterval(updateStats, 5000);
+    </script>
+</body>
+
+</html>
