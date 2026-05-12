@@ -1,0 +1,353 @@
+# 🎨 MULTFILM BOT - O'ZBEK TELEGRAM BOTI
+
+Telegram orqali bolalar multfilmlarini yuborish uchun to'liq bot tizimlari bilan birga.
+
+## 📋 Xususiyatlari
+
+✅ Telegram botida multfilm yuborish
+✅ Bepul paket (haftada 2 ta multfilm)
+✅ Premium obuna (20,000 so'm/oy - cheksiz multfilm)
+✅ Admin panel orqali multfilm qo'shish
+✅ Foydalanuvchi statistikasi
+✅ Qidirysh va filtrlash
+✅ Avtomatik haftalik reset
+✅ 👶 Bolalar uchun xavfsiz!
+
+---
+
+## 🚀 O'RNATISH (Setup)
+
+### 1. Node.js O'RNATISH
+
+Windows/Mac/Linux uchun:
+https://nodejs.org/ dan o'rnating (LTS versiyasi tavsiya qilinadi)
+
+### 2. Proyektni O'RNATISH
+
+```bash
+# Fayllarni yuklab oling
+git clone <url>
+cd multfilm-bot
+
+# Paketlarni o'rnating
+npm install
+```
+
+### 3. BOT TOKEN O'RNATISH
+
+`bot.js` faylida token o'zlashtiring:
+```javascript
+const TOKEN = '8707470724:AAGAI02VK56b077kBYYNPfjs6yyAEs5JEOI';
+```
+
+@BotFather dan o'zingizning tokenni oling: https://t.me/BotFather
+
+### 4. BOTNI ISHGA TUSHIRISH
+
+```bash
+npm start
+```
+
+Yoki development rejimida:
+```bash
+npm run dev
+```
+
+---
+
+## 🎯 BOT BUYUQLARINING RO'YXATI
+
+### Asosiy Tugmalar
+
+| Tugma | Tavsif |
+|-------|--------|
+| 🎨 Multfilm Yuborish | Multfilm kodini so'rash |
+| 👑 Premium | Premium obunalilga o'tish |
+| 📊 Status | Mening akkauntim haqida |
+| ❓ Yordam | Bot qo'llanmasi |
+
+### Inline Komandalar
+
+- `/start` - Botni ishga tushirish
+- `/cancel` - Amaliyotni bekor qilish
+- `/status` - Foydalanuvchi statusi
+
+---
+
+## 📸 ADMIN PANEL (QOLLANMA)
+
+Admin panel `admin-panel.html` faylidan ochiladi.
+
+### Yer bo'linishi
+
+1. **Statistika** - Foydalanuvchilar soni, premium a'zolar, multfilm-lar
+2. **Multfilm-lar Qo'shish** - Yangi multfilm qo'shish formasi
+3. **Multfilm-lar Ro'yxati** - Barcha multfilm-lar, o'chirish, tahrir
+4. **Foydalanuvchilar** - Premium va bepul a'zolar
+5. **Sozlamalar** - Bot sozlamalari
+
+### Multfilm-ni Qo'shish
+
+1. Admin panelni oching
+2. "🎨 Multfilm-lar Qo'shish" tabiga o'ting
+3. Multfilm ma'lumotlarini to'ldiring:
+   - Multfilm kodi (1-1000)
+   - Nomi (O'zbek va Ingliz)
+   - Tavsif
+   - Yili
+   - Janr
+   - Video URL
+   - Rasmi
+   - Davomiyligi
+
+4. "✅ Multfilm Qo'shish" tugmasini bosing
+
+---
+
+## 💾 MA'LUMOTLAR SAQLASH
+
+Bot ma'lumotlarni JSON formatida saqlaydi:
+
+### movies.json
+```json
+{
+  "001": {
+    "code": "001",
+    "nameUz": "Multfilm nomi",
+    "nameEn": "Cartoon Title",
+    "desc": "Tavsif",
+    "year": "2024",
+    "genre": "Sarguzasht",
+    "url": "https://example.com/cartoon.mp4",
+    "duration": "25"
+  }
+}
+```
+
+### users.json
+```json
+{
+  "123456789": {
+    "chatId": "123456789",
+    "username": "user",
+    "plan": "free", // yoki "premium"
+    "freeBudget": 2,
+    "premiumExpires": "2024-12-31",
+    "downloadsThisWeek": 0
+  }
+}
+```
+
+---
+
+## 💰 TO'LOV TIZIMLARI
+
+### Bepul Paket
+- **Narxi**: Bepul
+- **Limit**: Haftada 2 ta multfilm
+- **Davomiyligi**: Cheksiz
+
+### Premium Paket
+- **Narxi**: 20,000 so'm
+- **Limit**: Cheksiz
+- **Davomiyligi**: 1 oy
+
+### To'lov Jarayoni
+
+1. User "👑 Premium Obuna" tugmasini bosadi
+2. @multfilm_admin ga yozadi
+3. 20,000 so'm transfer qiladi
+4. Bot orqali "Premium obuna qildim" tugmasini bosadi
+5. Premium faollashiladi
+
+---
+
+## 🎥 VIDEO HOSTING
+
+Multfilm-larni qayerda saqlash?
+
+### Variantlar:
+
+1. **Firebase/Google Cloud** (Bepul 5GB)
+2. **AWS S3** (Pay-as-you-go)
+3. **Dropbox** (Bepul 2GB)
+4. **Telegram Fileserver** (Telegram da saqlash)
+
+### URL misol:
+```
+https://example.s3.amazonaws.com/001.mp4
+```
+
+---
+
+## 🔧 DEPLOYMENT (Serverda O'RNATISH)
+
+### Heroku Orqali (Bepul)
+
+```bash
+# Heroku CLI o'rnating
+npm install -g heroku
+
+# Login qiling
+heroku login
+
+# App yarating
+heroku create multfilm-bot
+
+# Environment variables o'zlashtiring
+heroku config:set BOT_TOKEN=YOUR_TOKEN
+
+# Deploy qiling
+git push heroku main
+
+# Logs ko'ring
+heroku logs --tail
+```
+
+### Railway Orqali (Bepul)
+1. https://railway.app ga oching
+2. GitHub account bilan login qiling
+3. Proyektni connect qiling
+4. Deploy qiling
+
+### VPS (Pullik, to'liq control)
+1. Linux VPS sotib oling
+2. Node.js o'rnating
+3. Proyektni clone qiling
+4. `npm start` chiqarasiz
+
+---
+
+## 🐛 XATOLAR VA YECHIMLAR
+
+### Xato: "Bot token invalid"
+```
+Yechim: Token to'g'ri ekanligini tekshiring
+```
+
+### Xato: "Cannot find module 'express'"
+```
+npm install
+npm install express
+npm install node-telegram-bot-api
+```
+
+### Bot javob bermaydi
+```
+1. Bot token to'g'ri ekanligini tekshiring
+2. Internet ulanishini tekshiring
+3. Telegram @BotFather orqali bot faol ekanligini tekshiring
+```
+
+---
+
+## 📞 BOSH KO'RSATMALAR
+
+### Bot Yaratish
+1. @BotFather ga telegram orqali yozing
+2. `/newbot` komandasi yuboring
+3. Bot nomini va usernameni kiriting
+4. Token olib botini foydalanishni boshlang
+
+### Token Olish
+```
+@BotFather -> /token -> Bot tanlang -> Token ko'ring
+```
+
+### Bot Guruhi Qo'shish
+```
+Bot devchasi guruhga qo'shadi
+Admin huququylari beradi
+Bot ishga tushadi
+```
+
+---
+
+## 📊 STATISTIKA
+
+Admin panelda real-time statistika:
+
+- 👥 Jami Foydalanuvchilar
+- 👑 Premium A'zolar
+- 🎨 Jami Multfilm-lar
+- 💰 Tushumlar
+
+---
+
+## 🛡️ XAVFSIZLIK
+
+### Muhim Maslahatlar
+
+1. **Token Xavfsizligi**
+   - Tokenni publicga chiqarmang
+   - `.env` faylida saqlang
+
+2. **Ma'lumotlar Xavfsizligi**
+   - Muntazam backup qiling
+   - Password sozlang admin panelga
+
+3. **Filtering**
+   - Xira so'z filterlang
+   - Reklama cheklang
+
+---
+
+## 👶 BOLALAR UCHUN XAVFSIZLIK
+
+Ushbu bot bolalar uchun mo'ljallangan:
+
+✅ Faqat bolalarga mos kontent
+✅ Reklama yo'q
+✅ Xavfli linklar yo'q
+✅ Ro'yxat noma'lum
+✅ Parent kontrol
+
+---
+
+## 🔄 YANGILASHLAR VA VERSIYALAR
+
+### v1.0.0 (Hozirgi)
+- ✅ Asosiy multfilm yuborish
+- ✅ Bepul/Premium paketlar
+- ✅ Admin panel
+- ✅ Statistika
+
+### v1.1.0 (Kelasi)
+- 🔜 Izohlar va reyting
+- 🔜 Seriallar qatori
+- 🔜 Download imkoniyati
+
+---
+
+## 📚 MANBALAR
+
+- [Telegram Bot API](https://core.telegram.org/bots)
+- [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api)
+- [Express.js](https://expressjs.com/)
+- [Node.js Docs](https://nodejs.org/docs/)
+
+---
+
+## 👨‍💼 MUALLIF
+
+**Multfilm Bot**
+- 📞 @multfilm_admin
+- 🤖 Telegram: @multfilm_bot
+
+---
+
+## 📄 LITSENZIYA
+
+MIT License - Erkin foydalanish mumkin
+
+---
+
+## ❓ SAVOLLAR VA JO'NATMA
+
+Har qanday savol yoki taklif uchun:
+- **Telegram**: @multfilm_admin
+- **Email**: multfilm@example.com
+
+---
+
+**Omad bo'lib ko'ring! 🎨🎉**

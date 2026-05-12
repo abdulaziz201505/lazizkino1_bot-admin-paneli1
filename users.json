@@ -1,0 +1,43 @@
+{
+  "8030572845": {
+    "chatId": 8030572845,
+    "username": "Laziz_2015_67",
+    "plan": "premium",
+    "freeBudget": 1,
+    "premiumExpires": "2026-06-10T03:17:17.840Z",
+    "joinDate": "2026-05-10T05:03:04.145Z",
+    "downloadsThisWeek": 0,
+    "lastReset": "2026-05-10T05:03:04.150Z",
+    "used": null
+  },
+  "7595457124": {
+    "chatId": 7595457124,
+    "username": "ixtiyar_zoxidov",
+    "plan": "free",
+    "freeBudget": 1,
+    "premiumExpires": null,
+    "joinDate": "2026-05-10T05:18:22.154Z",
+    "downloadsThisWeek": 0,
+    "lastReset": "2026-05-10T05:18:22.154Z"
+  },
+  "6222544109": {
+    "chatId": 6222544109,
+    "username": "mawlonow",
+    "plan": "free",
+    "freeBudget": 2,
+    "premiumExpires": null,
+    "joinDate": "2026-05-10T15:56:16.459Z",
+    "downloadsThisWeek": 1,
+    "lastReset": "2026-05-10T15:56:16.483Z"
+  },
+  "5101688261": {
+    "chatId": 5101688261,
+    "username": "Anonim",
+    "plan": "free",
+    "freeBudget": 2,
+    "premiumExpires": null,
+    "joinDate": "2026-05-11T07:30:54.574Z",
+    "downloadsThisWeek": 0,
+    "lastReset": "2026-05-11T07:30:54.574Z"
+  }
+}
